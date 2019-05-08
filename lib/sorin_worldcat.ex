@@ -20,6 +20,9 @@ defmodule SorinWorldcat do
 
   """
   def search(search_string, limit, offset, _filters \\ nil) do
+    # Filter parsers must be implemented locally according to
+    # a given instance's filter panel design; so the argument
+    # is discarded by default.
     xml =
       send_query(search_string, limit, offset + 1)
 
