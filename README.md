@@ -16,7 +16,7 @@ Sorin Worldcat encodes all of this functionality in `lib/sorin_worldcat.ex`.
 ```elixir
 def deps do
   [
-    {:sorin_worldcat, path: "extensions/sorin_worldcat"},
+    {:sorin_worldcat, git: "https://github.com/seulibrary/Sorin-WorldCat.git"},
   ]
 end
 ```
