@@ -23,8 +23,7 @@ defmodule SorinWorldcat do
     # Filter parsers must be implemented locally according to
     # a given instance's filter panel design; so the argument
     # is discarded by default.
-    xml =
-      send_query(search_string, limit, offset + 1)
+    xml = send_query(search_string, limit, offset + 1)
 
     results =
       xml
@@ -53,12 +52,12 @@ defmodule SorinWorldcat do
       search_string
       |> URI.encode_www_form()
 
-    "http://www.worldcat.org/webservices/catalog/search/sru?" <>
-      "query=srw.kw+all+%22#{formatted_search_string}%22" <>
-      "&wskey=#{Application.get_env(:sorin_worldcat, :wskey)}" <>
-      "#{Application.get_env(:sorin_worldcat, :result_format)}" <>
-      "&maximumRecords=#{limit}" <>
-      "&startRecord=#{offset}"
+    ("http://www.worldcat.org/webservices/catalog/search/sru?" <>
+       "query=srw.kw+all+%22#{formatted_search_string}%22" <>
+       "&wskey=#{Application.get_env(:sorin_worldcat, :wskey)}" <>
+       "#{Application.get_env(:sorin_worldcat, :result_format)}" <>
+       "&maximumRecords=#{limit}" <>
+       "&startRecord=#{offset}")
     |> HTTPoison.get!()
     |> Map.get(:body)
   end
@@ -71,27 +70,36 @@ defmodule SorinWorldcat do
   def extract_fields(record) do
     %{
       "contributor" =>
-      SweetXml.xpath(record, ~x"//dc:contributor/text()"sl)
-      |> nilify_empty(),
-      "creator" => SweetXml.xpath(record, ~x"//dc:creator/text()"sl)
-      |> nilify_empty(),
-      "date" => SweetXml.xpath(record, ~x"//dc:date/text()"s)
-      |> nilify_empty()
-      |> return_last_four(),
-      "description" => SweetXml.xpath(record, ~x"//dc:description[1]/text()"s)
-      |> nilify_empty(),
-      "format" => SweetXml.xpath(record, ~x"//dc:format/text()"s)
-      |> nilify_empty(),
-      "language" => SweetXml.xpath(record, ~x"//dc:language[last()]/text()"s)
-      |> nilify_empty(),
-      "publisher" => SweetXml.xpath(record, ~x"//dc:publisher/text()"s)
-      |> nilify_empty(),
-      "subject" => SweetXml.xpath(record, ~x"//dc:subject/text()"sl)
-      |> nilify_empty(),
-      "title" => SweetXml.xpath(record, ~x"//dc:title/text()"s)
-      |> nilify_empty(),
-      "type" => SweetXml.xpath(record, ~x"//dc:type/text()"s)
-      |> nilify_empty()
+        SweetXml.xpath(record, ~x"//dc:contributor/text()"sl)
+        |> nilify_empty(),
+      "creator" =>
+        SweetXml.xpath(record, ~x"//dc:creator/text()"sl)
+        |> nilify_empty(),
+      "date" =>
+        SweetXml.xpath(record, ~x"//dc:date/text()"s)
+        |> nilify_empty()
+        |> return_last_four(),
+      "description" =>
+        SweetXml.xpath(record, ~x"//dc:description[1]/text()"s)
+        |> nilify_empty(),
+      "format" =>
+        SweetXml.xpath(record, ~x"//dc:format/text()"s)
+        |> nilify_empty(),
+      "language" =>
+        SweetXml.xpath(record, ~x"//dc:language[last()]/text()"s)
+        |> nilify_empty(),
+      "publisher" =>
+        SweetXml.xpath(record, ~x"//dc:publisher/text()"s)
+        |> nilify_empty(),
+      "subject" =>
+        SweetXml.xpath(record, ~x"//dc:subject/text()"sl)
+        |> nilify_empty(),
+      "title" =>
+        SweetXml.xpath(record, ~x"//dc:title/text()"s)
+        |> nilify_empty(),
+      "type" =>
+        SweetXml.xpath(record, ~x"//dc:type/text()"s)
+        |> nilify_empty()
     }
   end
 
@@ -108,5 +116,4 @@ defmodule SorinWorldcat do
   end
 
   defp return_last_four(field) when is_nil(field), do: nil
-  
 end
