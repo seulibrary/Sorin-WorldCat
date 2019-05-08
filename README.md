@@ -1,6 +1,6 @@
 # SorinWorldcat
 
-Sorin Worldcat is a Sorin extension that provides the [WorldCat Search API](https://www.oclc.org/developer/develop/web-services/worldcat-search-api.en.html) as a catalog search endpoint.
+Sorin Worldcat is a [Sorin](https://github.com/seulibrary/Sorin) extension that provides the [WorldCat Search API](https://www.oclc.org/developer/develop/web-services/worldcat-search-api.en.html) as a catalog search endpoint.
 
 Sorin catalog search extensions are responsible for two services:
 
