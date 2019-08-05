@@ -54,7 +54,7 @@ defmodule SorinWorldcat do
 
     ("http://www.worldcat.org/webservices/catalog/search/sru?" <>
        "query=srw.kw+all+%22#{formatted_search_string}%22" <>
-       "&wskey=#{Application.get_env(:sorin_worldcat, :wskey)}" <>
+       "&wskey=#{System.get_env("WORLDCAT_WSKEY")}" <>
        "#{Application.get_env(:sorin_worldcat, :result_format)}" <>
        "&maximumRecords=#{limit}" <>
        "&startRecord=#{offset}")
